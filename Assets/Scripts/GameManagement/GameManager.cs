@@ -37,6 +37,12 @@ public class GameManager : MonoBehaviour
         {
             DetectBottleClick();
         }
+
+        if (Input.GetKeyDown(KeyCode.C)) // Nhan phim 'C' de kiem tra
+        {
+            int matchedBottles = CountMatchedBottles();
+            Debug.Log("Matched bottles: " + matchedBottles);
+        }
     }
 
     void InitializeBottles()
@@ -44,6 +50,7 @@ public class GameManager : MonoBehaviour
         sampleBottles = new GameObject[numberOfBottles];
         playedBottles = new GameObject[numberOfBottles];
         
+        // Starting point of bottles array
         float startingX = -((numberOfBottles - 1) * distanceBetweenBottles) / 2;
 
         
@@ -53,11 +60,20 @@ public class GameManager : MonoBehaviour
 
             if (!createdBottleNames.Contains(bottle.name))
             {
+                // vi tri cua bottle
                 Vector3 spawnPosition1 = new Vector3(startingX + i * distanceBetweenBottles, sampleBottlesPosition, 0f);
                 Vector3 spawnPosition2 = new Vector3(startingX + i * distanceBetweenBottles, playedBottlesPosition, 0f);
 
-                sampleBottles[i] = Instantiate(bottle, spawnPosition1, Quaternion.identity);
-                playedBottles[i] = Instantiate(bottle, spawnPosition2, Quaternion.identity);
+               
+                GameObject sampleBottle = Instantiate(bottle, spawnPosition1, Quaternion.identity);
+                sampleBottle.name = bottle.name; 
+
+                
+                GameObject playedBottle = Instantiate(bottle, spawnPosition2, Quaternion.identity);
+                playedBottle.name = bottle.name; 
+
+                sampleBottles[i] = sampleBottle;
+                playedBottles[i] = playedBottle;
 
                 createdBottleNames.Add(bottle.name);
 
@@ -120,6 +136,7 @@ public class GameManager : MonoBehaviour
                 secondSelectedBottle = clickedBottle;
                 Debug.Log("Second bottle selected: " + clickedBottle.name);
                 bottleEvent.SwapBottlesPositions(firstSelectedBottle, secondSelectedBottle);
+                bottleEvent.SwapBottlesInArray(playedBottles, firstSelectedBottle, secondSelectedBottle);
 
                 // reset after swap
                 bottleEvent.DeselectBottle(firstSelectedBottle);
@@ -139,4 +156,23 @@ public class GameManager : MonoBehaviour
         }
         return false;
     }
+
+    // kiem tra so Match
+    public int CountMatchedBottles()
+    {
+        int matchedCount = 0;
+
+        for (int i = 0; i < numberOfBottles; i++)
+        {
+            // So sanh ten cua 2 chai
+            if (playedBottles[i].name == sampleBottles[i].name && playedBottles[i].transform.position.x == sampleBottles[i].transform.position.x)
+            {
+                matchedCount++;
+            }
+        }
+
+        
+        return matchedCount;
+    }
+
 }
