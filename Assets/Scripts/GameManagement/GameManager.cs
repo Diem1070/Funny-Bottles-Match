@@ -6,8 +6,17 @@ using UnityEngine;
 /* Manage main logic of the game: Initialize, win/lose, reset */
 public class GameManager : MonoBehaviour
 {
+    /*
+    private LevelData levelData;
+    private Timer timeLimit;
+    private Checker checkLimit;
+    */ 
+
+
     public int numberOfBottles;
     public GameObject[] bottlePrefabs;
+
+    public Transform parentTransform;               // put in GamePlay Area object
 
     public float distanceBetweenBottles = 2f;
     public float sampleBottlesPosition = -2f;
@@ -17,13 +26,16 @@ public class GameManager : MonoBehaviour
     private BottleManager bottleManager;
     private BottleEvent bottleEvent;
 
+    
+    
+
     void Start()
     {
 
         //numberOfBottles = GameSettings.Instance.GetNumberOfBottles();
         Debug.Log("Initialize Number Of bottles = " + numberOfBottles);
         
-        bottleManager = new BottleManager(numberOfBottles, bottlePrefabs, distanceBetweenBottles, sampleBottlesPosition, playedBottlesPosition);
+        bottleManager = new BottleManager(numberOfBottles, bottlePrefabs, distanceBetweenBottles, sampleBottlesPosition, playedBottlesPosition, parentTransform);
         bottleManager.InitializeBottles();
         bottleManager.ShufflePlayedBottles();
 

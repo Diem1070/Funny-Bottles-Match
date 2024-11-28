@@ -7,6 +7,8 @@ public class BottleManager
     public GameObject[] sampleBottles { get; private set; }
     public GameObject[] playedBottles { get; private set; }
 
+    public Transform parentTransform;
+
     private int numberOfBottles;
     private GameObject[] bottlePrefabs;
     private float distanceBetweenBottles;
@@ -15,7 +17,7 @@ public class BottleManager
     private HashSet<string> createdBottleNames;     // theo doi cac chai da duoc tao
 
     // constructor
-    public BottleManager(int numberOfBottles, GameObject[] bottlePrefabs, float distance, float samplePos, float playedPos)
+    public BottleManager(int numberOfBottles, GameObject[] bottlePrefabs, float distance, float samplePos, float playedPos, Transform parentTransform)
     {
         this.numberOfBottles = numberOfBottles;
         this.bottlePrefabs = bottlePrefabs;
@@ -23,6 +25,7 @@ public class BottleManager
         this.sampleBottlesPosition = samplePos;
         this.playedBottlesPosition = playedPos;
         createdBottleNames = new HashSet<string>();
+        this.parentTransform = parentTransform;
     }
 
     public void InitializeBottles()
@@ -58,8 +61,9 @@ public class BottleManager
 
     private GameObject CreateBottle(GameObject prefab, Vector3 position)
     {
-        GameObject bottle = GameObject.Instantiate(prefab, position, Quaternion.identity);
+        GameObject bottle = GameObject.Instantiate(prefab, position, Quaternion.identity, parentTransform);
         bottle.name = prefab.name;
+        bottle.transform.localScale = new Vector3(108, 108, 1);
         return bottle;
     }
 
