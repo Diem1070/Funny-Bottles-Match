@@ -5,54 +5,59 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-
-// quan ly trang thai man choi va dieu kien thang thua
+// Instance duy nhat duoc truy cap tu moi noi
+// nhan thong tin man choi tu LevelMenuManager va pass gia tri cho GameManager de khoi tao chai
 public class LevelManager : MonoBehaviour
 {
-    public LevelData currentLevel;
-    public Timer timer;             // reference to Timer
-    private int checkCount;         // Tracks how many times the player checked bottles
+    private static LevelManager _instance;
+    public static LevelManager Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                _instance = FindObjectOfType<LevelManager>();
+                if (_instance == null)
+                {
+                    GameObject obj = new GameObject("LevelManager");
+                    _instance = obj.AddComponent<LevelManager>();
+                }
+            }
+            return _instance;
+        }
+    }
 
+    private void Awake()
+    {
+        if (_instance == null)
+        {
+            _instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else if (_instance != this)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    private LevelData currentLevel;
+
+    public void SetLevelData(LevelData levelData)
+    {
+        currentLevel = levelData;
+        Debug.Log("LevelManager: Setting level data...");
+        Debug.Log("Level number: " + currentLevel.LevelNumber);
+        Debug.Log("Number of bottles: " + currentLevel.NumberOfBottles);
+        
+    }
+
+    public LevelData GetLevelData()
+    {
+        return currentLevel;
+    }
     
-    void InitializeLevel()
+    private void Start()
     {
-        // Load data for current level
-        checkCount = 0;
-
-        if (currentLevel.timerLimit > 0)
-        {
-            // timer.StartTimer(currentLevel.timerLimit);
-        }
-
-        Debug.Log("Level initialized: " + currentLevel.levelNumber);
-    }
-
-    public void OnCheckMatchedBottles(BottleManager bottleManager)
-    {
-        int matchedBottles = bottleManager.CountMatchedBottles();
-        Debug.Log("Matched Bottles: " + matchedBottles);
-
-        // Increment check count
-        checkCount++;   
-
-        // Victory condition
-        if (matchedBottles == currentLevel.numberOfBottles)
-        {
-            Debug.Log("Level complete!");
-            EndLevel(true);
-        }
-
-        else if (currentLevel.checkLimit > 0 && checkCount >= currentLevel.checkLimit)
-        {
-            Debug.Log("Check limit reached. Game over!");
-            EndLevel(false);
-        }
-    }
-
-    void EndLevel(bool isSuccess)
-    {
-        timer.StopTimer();
-        // Add win/lose logic or move to next level
-        Debug.Log(isSuccess ? "Level passed!" : "Level failed!");
+        
     }
 }

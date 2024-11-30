@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -7,15 +8,27 @@ public class LevelMenuManager : MonoBehaviour
 {
     public LevelData[] levels;
 
-    public void StartLevel(int levelIndex)
+    public static int currentLevel;
+    private GameManager gameManager;
+
+    public void OnClickLevel(int levelNum)
     {
-        if (levelIndex < 0 || levelIndex >= levels.Length) return;
+        currentLevel = levelNum;
 
-        LevelManager levelManager = FindObjectOfType<LevelManager>();
-        levelManager.currentLevel = levels[levelIndex];
+        // pass values to LevelManager via Singleton
+        if (LevelManager.Instance != null )
+        {
+            LevelManager.Instance.SetLevelData(levels[currentLevel]);
+            //Debug.Log("Current level data: " + LevelManager.Instance.currentLevel.NumberOfBottles);
+            
+        }
+        else
+        {
+            Debug.LogError("LevelManager instance is null");
+        }
+        SceneManager.LoadScene("GamePlay");
+        Debug.Log("Navigate to GamePlay successully");
 
-        Debug.Log("Starting level " + levels[levelIndex].levelNumber);
-        // Load GamePlay scene or initialize the level
     }
 
 
@@ -23,6 +36,5 @@ public class LevelMenuManager : MonoBehaviour
     {
         this.gameObject.SetActive(false);
     }
-
     
 }

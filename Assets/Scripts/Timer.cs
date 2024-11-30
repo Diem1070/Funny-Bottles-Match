@@ -11,7 +11,7 @@ public class Timer : MonoBehaviour
 {
     public TMP_Text timerText;              // Display time text on UI
     public Image slider;                    // circle bar
-    public float timeLimit = 60f;           
+    public float timeLimit;           
 
     private float remainingTime;            // during counting down
     private bool startTimer;                // check if timer is running
@@ -84,7 +84,7 @@ public class Timer : MonoBehaviour
         else
         {
             // trigger event when the time over
-            startTimer = false;
+            StopTimer();
             OnComplete?.Invoke();
             // end game or change state
         }
@@ -92,10 +92,7 @@ public class Timer : MonoBehaviour
 
     public void StopTimer()
     {
-        if (startTimer)
-        {
-            startTimer = false;
-        }
+        startTimer = false;
     }
 
     public void RestartTimer()
@@ -113,5 +110,11 @@ public class Timer : MonoBehaviour
             timerText.text = Mathf.CeilToInt(remainingTime).ToString();
         }
         slider.fillAmount = remainingTime * multiplierFactor;
+    }
+
+    public bool isTimeOver()
+    {
+        if (remainingTime <= 0) return true;
+        else return false;
     }
 }

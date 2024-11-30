@@ -1,27 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
-[System.Serializable]
 public class LevelData : MonoBehaviour
 {
-    public int levelNumber;
-    public int numberOfBottles;
-    public float timerLimit;            // Timer limit (0 if no timer)
-    public int checkLimit;              // number of checks allowed (0 if no limit)
+    [SerializeField] int levelNumber;
+    [SerializeField] int numberOfBottles;
+    [SerializeField] float timeLimit;            // Timer limit (0 if no timer)
+    [SerializeField] int checkLimit;              // number of checks allowed (0 if no limit)
+    [SerializeField] Image[] star;
+
+
+
+    public int LevelNumber { get { return levelNumber; } set { levelNumber = value; } }
+    public int NumberOfBottles { get { return numberOfBottles; } set { numberOfBottles = value; } }
+
+    public float TimeLimit { get { return timeLimit; } set { timeLimit = value; } }
+    public int CheckLimit { get {return checkLimit; } set { checkLimit = value; } }
     
-    public LevelData(int levelNumber, int numberOfBottles, float timerLimit, int checkLimit)
-    {
-        this.levelNumber = levelNumber;
-        this.numberOfBottles = numberOfBottles;
-        this.timerLimit = timerLimit;
-        this.checkLimit = checkLimit;
-    }
+    public Image[] Star { get { return star; } set { star = value; } }
 
-
-    public void GetLevelData()
-    {
-        Debug.Log("Level " + this.levelNumber);
-        Debug.Log("Number of bottles: " + this.numberOfBottles);
-    }
 }
