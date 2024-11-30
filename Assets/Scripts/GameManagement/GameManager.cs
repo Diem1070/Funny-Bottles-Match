@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
 
-        //numberOfBottles = GameSettings.Instance.GetNumberOfBottles();
+        numberOfBottles = GameSettings.Instance.GetNumberOfBottles();
         Debug.Log("Initialize Number Of bottles = " + numberOfBottles);
         
         bottleManager = new BottleManager(numberOfBottles, bottlePrefabs, distanceBetweenBottles, sampleBottlesPosition, playedBottlesPosition);
