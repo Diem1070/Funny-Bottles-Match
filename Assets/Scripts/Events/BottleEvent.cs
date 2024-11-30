@@ -18,11 +18,14 @@ public class BottleEvent
     {
         // Raycast to detect the clicked object
         RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
+
         if (hit.collider == null)
         {
-            Debug.Log("No bottle clicked.");
+            Debug.Log("No object was hit by the Raycast.");
             return;
         }
+
+
 
         GameObject clickedBottle = hit.collider.gameObject;
         Debug.Log("Clicked bottle: " + clickedBottle.name);
@@ -61,12 +64,7 @@ public class BottleEvent
             // Swap their positions and update the played bottles array
             SwapBottlesPositions(firstSelectedBottle, secondSelectedBottle);
             SwapBottlesInArray(bottleManager.playedBottles, firstSelectedBottle, secondSelectedBottle);
-
-            // Deselect both bottles after swapping
-            Debug.Log("Deselecting bottles after swapping.");
-            DeselectBottle(firstSelectedBottle);
-            DeselectBottle(secondSelectedBottle);
-
+            
             // Reset selected bottles
             firstSelectedBottle = null;
             secondSelectedBottle = null;
@@ -76,24 +74,43 @@ public class BottleEvent
     // chon bottle
     public void SelectBottle(GameObject bottle)
     {
-        bottle.transform.position = new Vector3(bottle.transform.position.x, bottle.transform.position.y + selectedBottleHeightOffset, bottle.transform.position.z);
         Debug.Log(bottle.name + " selected");
-    }
 
+        // light
+        Bottle bottleScript = bottle.GetComponent<Bottle>();
+        if (bottleScript != null)
+        {
+            bottleScript.TurnOnLight();
+        }
+    }
+    
     // huy chon bottle
     public void DeselectBottle(GameObject bottle)
     {
-        bottle.transform.position = new Vector3(bottle.transform.position.x, bottle.transform.position.y - selectedBottleHeightOffset, bottle.transform.position.z);
         Debug.Log(bottle.name + " deselected");
-    }
 
+        // light
+        Bottle bottleScript = bottle.GetComponent<Bottle>();
+        if (bottleScript != null)
+        {
+            bottleScript.TurnOffLight();
+        }
+    }
+    
     // doi vi tri 
     public void SwapBottlesPositions(GameObject bottle1, GameObject bottle2)
     {
-        Vector3 tempPosition = bottle1.transform.position;
-        bottle1.transform.position = bottle2.transform.position;
-        bottle2.transform.position = tempPosition;
-        Debug.Log("Swapped positions of " + bottle1.name + " and " + bottle2.name);
+        // Save the initial positions to avoid multiple changes at once.
+        Vector3 bottle1OriginalPosition = bottle1.transform.position;
+        Vector3 bottle2OriginalPosition = bottle2.transform.position;
+
+        // Start the coroutine to smoothly swap positions.
+        bottle1.GetComponent<Bottle>().StartCoroutine(SmoothMove(bottle1, bottle2OriginalPosition, bottle1OriginalPosition));
+        bottle2.GetComponent<Bottle>().StartCoroutine(SmoothMove(bottle2, bottle1OriginalPosition, bottle2OriginalPosition));
+
+        // Start a coroutine that will turn off the light after both bottles have moved.
+        bottle1.GetComponent<Bottle>().StartCoroutine(WaitAndTurnOffLight(bottle1, 0.5f)); // Adjust time as necessary
+        bottle2.GetComponent<Bottle>().StartCoroutine(WaitAndTurnOffLight(bottle2, 0.5f)); // Adjust time as necessary
     }
 
     // Swap bottles in the playedBottles array
@@ -118,5 +135,35 @@ public class BottleEvent
             if (bottle == b) return true;
         }
         return false;
+    }
+
+    private IEnumerator SmoothMove(GameObject bottle, Vector3 targetPosition, Vector3 originalPosition)
+    {
+        float duration = 0.5f; // Time to complete the move
+        float elapsedTime = 0f;
+        Vector3 startPosition = bottle.transform.position;
+
+        while (elapsedTime < duration)
+        {
+            bottle.transform.position = Vector3.Lerp(startPosition, targetPosition, elapsedTime / duration);
+            elapsedTime += Time.deltaTime;
+            yield return null; // Wait for the next frame
+        }
+
+        // Ensure the final position is exactly the target position
+        bottle.transform.position = targetPosition;
+    }
+
+    private IEnumerator WaitAndTurnOffLight(GameObject bottle, float delay)
+    {
+        // Wait for the given delay to ensure the bottle has finished moving
+        yield return new WaitForSeconds(delay);
+
+        // Now turn off the light for the bottle
+        Bottle bottleScript = bottle.GetComponent<Bottle>();
+        if (bottleScript != null)
+        {
+            bottleScript.TurnOffLight();
+        }
     }
 }
