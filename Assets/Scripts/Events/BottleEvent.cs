@@ -7,14 +7,14 @@ public class BottleEvent
     private float selectedBottleHeightOffset;
     private GameObject firstSelectedBottle;
     private GameObject secondSelectedBottle;
-
+    
 
     public BottleEvent(float heightOffset)
     {
         this.selectedBottleHeightOffset = heightOffset;
     }
 
-    public void DetectBottleClick(BottleManager bottleManager)
+    public void DetectBottleClick(BottleManager bottleManager) // edit here *******
     {
         // Raycast to detect the clicked object
         RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
