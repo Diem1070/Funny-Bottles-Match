@@ -41,7 +41,7 @@ public class GameManager : MonoBehaviour
         currentGameMode = GameModeSelection.Instance.GetGameMode();
         Debug.Log("Game Manager::game mode: " + currentGameMode.ToString());
 
-<<<<<<< Updated upstream
+
         if (currentGameMode == EGameMode.Level)
         {
             InitializeLevelMode();
@@ -50,10 +50,9 @@ public class GameManager : MonoBehaviour
         {
             InitilizeCustomMode();
         }
-=======
+
         numberOfBottles = GameSettings.Instance.GetNumberOfBottles();
         Debug.Log("Initialize Number Of bottles = " + numberOfBottles);
->>>>>>> Stashed changes
         
         InitializeGame();
 
