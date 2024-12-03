@@ -36,6 +36,12 @@ public class GameManager : MonoBehaviour
 
     private bool isGameRunning = true;          // flag controls game state
 
+    private void Awake()
+    {
+        // initialize components in GameManager
+
+    }
+
     void Start()
     {
         currentGameMode = GameModeSelection.Instance.GetGameMode();
@@ -50,9 +56,6 @@ public class GameManager : MonoBehaviour
         {
             InitilizeCustomMode();
         }
-
-        numberOfBottles = GameSettings.Instance.GetNumberOfBottles();
-        Debug.Log("Initialize Number Of bottles = " + numberOfBottles);
         
         InitializeGame();
 
@@ -172,20 +175,12 @@ public class GameManager : MonoBehaviour
         foreach (GameObject bottle in bottleManager.playedBottles)
         {
             SetBottleColor(bottle, Color.white);
-            BottleLightOn(bottle);
         }
 
         foreach (GameObject bottle in bottleManager.sampleBottles)
         {
             SetBottleColor(bottle, Color.white);
-            BottleLightOn(bottle);
         }
-    }
-
-    void BottleLightOn(GameObject bottle)
-    {
-        Bottle bottleRenderer = bottle.GetComponent<Bottle>();
-        bottleRenderer.TurnOnLight();
     }
 
     

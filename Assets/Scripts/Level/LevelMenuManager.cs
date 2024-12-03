@@ -13,7 +13,7 @@ public class LevelMenuManager : MonoBehaviour
 
     public void OnClickLevel(int levelNum)
     {
-        currentLevel = levelNum;
+        currentLevel = levelNum - 1;
 
         // pass values to LevelManager via Singleton
         if (LevelManager.Instance != null )
