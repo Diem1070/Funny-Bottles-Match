@@ -9,6 +9,7 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public EGameMode currentGameMode;       // save current game mode
+    private GameModeManager gameModeManager;
 
     // reference to timer and checker
     public Timer timer;
@@ -16,19 +17,22 @@ public class GameManager : MonoBehaviour
 
     private LevelData levelData;
 
-    public TMP_Text matchedBottlesText;            // display number of matched bottles 
+    [SerializeField] TMP_Text matchedBottlesText;            // display number of matched bottles 
 
 
     // Fields for initializing bottles
-    public int numberOfBottles;
-    public GameObject[] bottlePrefabs;
+    int numberOfBottles;
+    [SerializeField] GameObject[] bottlePrefabs;
 
-    public Transform parentTransform;               // put in GamePlay Area object
+    [SerializeField] Transform parentTransform;               // put in GamePlay Area object
 
-    public float distanceBetweenBottles = 2f;
-    public float sampleBottlesPosition = -2f;
-    public float playedBottlesPosition = 2f;
-    public float selectedBottleHeightOffset = 1f;   // UI bottle selected
+    [SerializeField] float distanceBetweenBottles;
+    [SerializeField] float sampleBottlesPosition;
+    [SerializeField] float playedBottlesPosition;
+    [SerializeField] float selectedBottleHeightOffset;   // UI bottle selected
+
+    [SerializeField] LevelModeManager levelModeManagerObject;
+    [SerializeField] CustomModeManager customModeManagerObject;
 
     private BottleManager bottleManager;
     private BottleEvent bottleEvent;
@@ -44,18 +48,8 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        currentGameMode = GameModeSelection.Instance.GetGameMode();
-        Debug.Log("Game Manager::game mode: " + currentGameMode.ToString());
 
-
-        if (currentGameMode == EGameMode.Level)
-        {
-            InitializeLevelMode();
-        }
-        else if (currentGameMode == EGameMode.Custom)
-        {
-            InitilizeCustomMode();
-        }
+        InitializeGameMode();
         
         InitializeGame();
 
@@ -82,28 +76,34 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void InitializeLevelMode()
+    void InitializeGameMode()
     {
-        levelData = LevelManager.Instance.GetLevelData();
-        numberOfBottles = levelData.NumberOfBottles;
-        Debug.Log("Level: " + levelData.ToString());
+        currentGameMode = GameModeSelection.Instance.GetGameMode();
+        Debug.Log("Game Manager::game mode: " + currentGameMode.ToString());
 
-        timer.timeLimit = levelData.TimeLimit;
-        checker.checkLimit = levelData.CheckLimit;
+
+        if (currentGameMode == EGameMode.Level)
+        {
+            gameModeManager = levelModeManagerObject;
+        }
+        else if (currentGameMode == EGameMode.Custom)
+        {
+            gameModeManager = customModeManagerObject;
+        }
     }
-
-    void InitilizeCustomMode()
-    {
-        numberOfBottles = GameSettings.Instance.GetNumberOfBottles();
-
-    }
+    
 
     void InitializeGame()
     {
+        gameModeManager.Initialize();
+        numberOfBottles = gameModeManager.GetNumberOfBottles();
+        timer.timeLimit = gameModeManager.GetTimeLimit();
+        checker.checkLimit = gameModeManager.GetCheckLimit();
+
+
         // Bottles
         bottleManager = new BottleManager(numberOfBottles, bottlePrefabs, distanceBetweenBottles, sampleBottlesPosition, playedBottlesPosition, parentTransform);
         bottleManager.InitializeBottles();
-        bottleManager.ShufflePlayedBottles();
 
         bottleEvent = new BottleEvent(selectedBottleHeightOffset);
 

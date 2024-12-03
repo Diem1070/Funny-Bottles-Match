@@ -5,8 +5,7 @@ using UnityEngine;
 public class LevelModeManager : GameModeManager
 {
     LevelData levelData;
-    public Timer timer;
-    public Checker checker;
+
 
     public override void Initialize()
     {
@@ -14,8 +13,8 @@ public class LevelModeManager : GameModeManager
         numberOfBottles = levelData.NumberOfBottles;
         Debug.Log("Level: " + levelData.ToString());
 
-        timer.timeLimit = levelData.TimeLimit;
-        checker.checkLimit = levelData.CheckLimit;
+        timeLimit = levelData.TimeLimit;
+        checkLimit = levelData.CheckLimit;
     }
 
     public override void HandleSuccess()

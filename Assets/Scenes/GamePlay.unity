@@ -883,6 +883,63 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 752577233}
   m_CullTransparentMesh: 1
+--- !u!1 &760384247
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 760384249}
+  - component: {fileID: 760384248}
+  - component: {fileID: 760384250}
+  m_Layer: 0
+  m_Name: GameModeManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &760384248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 760384247}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ced281c3ddb3d342be8a0b32e637093, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &760384249
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 760384247}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.515091, y: -0.034361348, z: 0.043030918}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &760384250
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 760384247}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb3b8b91c31b28143b8cb1a6dd925787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &852402246
 GameObject:
   m_ObjectHideFlags: 0
@@ -1804,7 +1861,6 @@ MonoBehaviour:
   timer: {fileID: 2035331961}
   checker: {fileID: 1512533685}
   matchedBottlesText: {fileID: 81001902}
-  numberOfBottles: 10
   bottlePrefabs:
   - {fileID: 7758542398267976765, guid: e49de620aec344e49a5253e36e76efc2, type: 3}
   - {fileID: 6346354593455644882, guid: fbffb92fb2d94f24fab78d87fd68c480, type: 3}
@@ -1821,6 +1877,8 @@ MonoBehaviour:
   sampleBottlesPosition: -2
   playedBottlesPosition: 1
   selectedBottleHeightOffset: 2
+  levelModeManagerObject: {fileID: 760384248}
+  customModeManagerObject: {fileID: 760384250}
 --- !u!1 &1189071765
 GameObject:
   m_ObjectHideFlags: 0
@@ -3363,3 +3421,4 @@ SceneRoots:
   - {fileID: 1659118243}
   - {fileID: 944979441}
   - {fileID: 1166480950}
+  - {fileID: 760384249}
