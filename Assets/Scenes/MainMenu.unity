@@ -1735,7 +1735,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.00040819857}
+  m_AnchoredPosition: {x: 0, y: 0.0005797461}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &733625970
@@ -2510,6 +2510,7 @@ MonoBehaviour:
   timeLimit: 90
   checkLimit: 0
   star: []
+  checkMode: 1
 --- !u!114 &1070065697
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3086,7 +3087,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 2137616186}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.9999921
+  m_Size: 0.99972737
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

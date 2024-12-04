@@ -52,7 +52,7 @@ public class GameManager : MonoBehaviour
 
         matchedBottlesText.text = $"Match: 0/{numberOfBottles}";
 
-        checker.OnCheckPressed.AddListener(CheckGameStatus);
+        checker.OnCheck.AddListener(CheckGameStatus);
         timer.OnComplete.AddListener(isTimeOver);
     }
 
@@ -70,6 +70,11 @@ public class GameManager : MonoBehaviour
         if (Input.GetMouseButtonDown(0)) // 0 is left click
         {
             bottleEvent.DetectBottleClick(bottleManager);
+
+            if (checker.GetCheckMode() == ECheckMode.AutoCheck)
+            {
+                checker.AutoCheck();
+            }
         }
     }
 
@@ -96,19 +101,17 @@ public class GameManager : MonoBehaviour
 
     void InitializeGame()
     {
-        numberOfBottles = gameModeManager.GetNumberOfBottles();
-        timer.timeLimit = gameModeManager.GetTimeLimit();
-        checker.checkLimit = gameModeManager.GetCheckLimit();
-
-
         // Bottles
+        numberOfBottles = gameModeManager.GetNumberOfBottles();
         bottleManager = new BottleManager(numberOfBottles, bottlePrefabs, distanceBetweenBottles, sampleBottlesPosition, playedBottlesPosition, parentTransform);
         bottleManager.InitializeBottles();
 
         bottleEvent = new BottleEvent(selectedBottleHeightOffset);
 
+        // other UI element
         timer.timeLimit = gameModeManager.GetTimeLimit();
-        checker.checkLimit = gameModeManager.GetCheckLimit();
+        checker.SetCheckLimit(gameModeManager.GetCheckLimit());
+        checker.SetCheckMode(gameModeManager.GetCheckMode());
 
         // Check if using timer or not
         if (timer.timeLimit == 0)
@@ -119,12 +122,6 @@ public class GameManager : MonoBehaviour
         {
             timer.gameObject.SetActive(true);
             
-        }
-
-        // check if using checkLimit or not
-        if (checker.checkLimit == 0)
-        {
-            checker.checkText.text = "Check";
         }
     }
 
