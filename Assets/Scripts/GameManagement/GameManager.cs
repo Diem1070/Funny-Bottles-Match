@@ -4,6 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEditor;
 
 /* Manage main logic of the game: Initialize, win/lose, reset */
 public class GameManager : MonoBehaviour
@@ -12,13 +13,13 @@ public class GameManager : MonoBehaviour
     private GameModeManager gameModeManager;
 
     // reference to timer and checker
-    public Timer timer;
-    public Checker checker;
+    [SerializeField] Timer timer;
+    [SerializeField] Checker checker;
 
-    private LevelData levelData;
 
+    private int numberOfBottle;
     [SerializeField] TMP_Text matchedBottlesText;            // display number of matched bottles 
-
+    [SerializeField] TMP_Text levelNumberText;
 
     // Fields for initializing bottles
     int numberOfBottles;
@@ -36,15 +37,11 @@ public class GameManager : MonoBehaviour
 
     private BottleManager bottleManager;
     private BottleEvent bottleEvent;
+
     // -------------------------------------
 
     private bool isGameRunning = true;          // flag controls game state
 
-    private void Awake()
-    {
-        // initialize components in GameManager
-
-    }
 
     void Start()
     {
@@ -79,23 +76,26 @@ public class GameManager : MonoBehaviour
     void InitializeGameMode()
     {
         currentGameMode = GameModeSelection.Instance.GetGameMode();
-        Debug.Log("Game Manager::game mode: " + currentGameMode.ToString());
+        Debug.Log("GameManager - game mode: " + currentGameMode.ToString());
 
 
         if (currentGameMode == EGameMode.Level)
         {
             gameModeManager = levelModeManagerObject;
+            gameModeManager.Initialize();
+            levelNumberText.text = $"Level {levelModeManagerObject.GetLevelNumber()}";
         }
         else if (currentGameMode == EGameMode.Custom)
         {
             gameModeManager = customModeManagerObject;
+            gameModeManager.Initialize();
+            levelNumberText.text = "Custom";
         }
     }
     
 
     void InitializeGame()
     {
-        gameModeManager.Initialize();
         numberOfBottles = gameModeManager.GetNumberOfBottles();
         timer.timeLimit = gameModeManager.GetTimeLimit();
         checker.checkLimit = gameModeManager.GetCheckLimit();
@@ -106,6 +106,9 @@ public class GameManager : MonoBehaviour
         bottleManager.InitializeBottles();
 
         bottleEvent = new BottleEvent(selectedBottleHeightOffset);
+
+        timer.timeLimit = gameModeManager.GetTimeLimit();
+        checker.checkLimit = gameModeManager.GetCheckLimit();
 
         // Check if using timer or not
         if (timer.timeLimit == 0)
@@ -161,15 +164,13 @@ public class GameManager : MonoBehaviour
         // Stop all things in GamePlay
         isGameRunning = false;
 
-        if(isWin)
+        if (isWin)
         {
-            // Pop up Success Panel (with congratulation effect) and Results (if game mode is Level)
-            GameStateManager.Instance.ShowSuccessPanel();
+            GameStateManager.Instance.ChangeState(EGameState.Success);
         }
         else
         {
-            // Pop up GameOver Panel (with fail effect)
-            GameStateManager.Instance.ShowOverPanel();
+            GameStateManager.Instance.ChangeState(EGameState.GameOver);
         }
 
         foreach (GameObject bottle in bottleManager.playedBottles)
