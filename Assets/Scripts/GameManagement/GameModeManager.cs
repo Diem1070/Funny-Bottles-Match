@@ -4,9 +4,11 @@ using UnityEngine;
 
 public abstract class GameModeManager : MonoBehaviour 
 {
-    protected int numberOfBottles;
+    // set default for fields
+    protected int numberOfBottles = 10;     
     protected float timeLimit = 0;
     protected int checkLimit = 0;
+    protected ECheckMode checkMode = ECheckMode.ButtonCheck;
 
     public int GetNumberOfBottles()
     {
@@ -21,6 +23,11 @@ public abstract class GameModeManager : MonoBehaviour
     public int GetCheckLimit()
     {
         return checkLimit;
+    }
+
+    public ECheckMode GetCheckMode()
+    {
+        return checkMode;
     }
 
     public abstract void Initialize();

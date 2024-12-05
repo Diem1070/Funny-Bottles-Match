@@ -15,6 +15,12 @@ public class LevelModeManager : GameModeManager
 
         timeLimit = levelData.TimeLimit;
         checkLimit = levelData.CheckLimit;
+        checkMode = levelData.CheckMode;
+    }
+
+    public int GetLevelNumber()
+    {
+        return levelData.LevelNumber;
     }
 
     public override void HandleSuccess()
