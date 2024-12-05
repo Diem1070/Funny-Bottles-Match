@@ -7,14 +7,14 @@ public class BottleEvent
     private float selectedBottleHeightOffset;
     private GameObject firstSelectedBottle;
     private GameObject secondSelectedBottle;
-
+    
 
     public BottleEvent(float heightOffset)
     {
         this.selectedBottleHeightOffset = heightOffset;
     }
 
-    public void DetectBottleClick(BottleManager bottleManager)
+    public void DetectBottleClick(BottleManager bottleManager) // edit here *******
     {
         // Raycast to detect the clicked object
         RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
@@ -75,28 +75,17 @@ public class BottleEvent
     public void SelectBottle(GameObject bottle)
     {
         Debug.Log(bottle.name + " selected");
-
-        // light
-        Bottle bottleScript = bottle.GetComponent<Bottle>();
-        if (bottleScript != null)
-        {
-            bottleScript.TurnOnLight();
-        }
+        bottle.transform.position = new Vector3(bottle.transform.position.x, bottle.transform.position.y + selectedBottleHeightOffset, bottle.transform.position.z);
     }
     
     // huy chon bottle
     public void DeselectBottle(GameObject bottle)
     {
         Debug.Log(bottle.name + " deselected");
+        bottle.transform.position = new Vector3(bottle.transform.position.x, bottle.transform.position.y - selectedBottleHeightOffset, bottle.transform.position.z);
 
-        // light
-        Bottle bottleScript = bottle.GetComponent<Bottle>();
-        if (bottleScript != null)
-        {
-            bottleScript.TurnOffLight();
-        }
     }
-    
+
     // doi vi tri 
     public void SwapBottlesPositions(GameObject bottle1, GameObject bottle2)
     {
@@ -108,10 +97,20 @@ public class BottleEvent
         bottle1.GetComponent<Bottle>().StartCoroutine(SmoothMove(bottle1, bottle2OriginalPosition, bottle1OriginalPosition));
         bottle2.GetComponent<Bottle>().StartCoroutine(SmoothMove(bottle2, bottle1OriginalPosition, bottle2OriginalPosition));
 
-        // Start a coroutine that will turn off the light after both bottles have moved.
-        bottle1.GetComponent<Bottle>().StartCoroutine(WaitAndTurnOffLight(bottle1, 0.5f)); // Adjust time as necessary
-        bottle2.GetComponent<Bottle>().StartCoroutine(WaitAndTurnOffLight(bottle2, 0.5f)); // Adjust time as necessary
+        // Reset the height offset for both bottles after the move.
+        bottle1.GetComponent<Bottle>().StartCoroutine(ResetHeightAfterSwap(bottle1, bottle2, 0.5f)); // Adjust delay as needed
     }
+
+    // Coroutine to reset bottle heights after the swap animation is complete
+    private IEnumerator ResetHeightAfterSwap(GameObject bottle1, GameObject bottle2, float delay)
+    {
+        yield return new WaitForSeconds(delay); // Wait for swap animation to finish
+
+        // Reset heights
+        DeselectBottle(bottle1);
+        DeselectBottle(bottle2);
+    }
+
 
     // Swap bottles in the playedBottles array
     public void SwapBottlesInArray(GameObject[] bottlesArray, GameObject bottle1, GameObject bottle2)
@@ -154,16 +153,11 @@ public class BottleEvent
         bottle.transform.position = targetPosition;
     }
 
-    private IEnumerator WaitAndTurnOffLight(GameObject bottle, float delay)
+    private IEnumerator WaitAndResetHeight(GameObject bottle, float targetY, float delay)
     {
-        // Wait for the given delay to ensure the bottle has finished moving
-        yield return new WaitForSeconds(delay);
+        yield return new WaitForSeconds(delay); // Wait for the swap animation to complete
 
-        // Now turn off the light for the bottle
-        Bottle bottleScript = bottle.GetComponent<Bottle>();
-        if (bottleScript != null)
-        {
-            bottleScript.TurnOffLight();
-        }
+        // Reset the Y position to the target height
+        bottle.transform.position = new Vector3(bottle.transform.position.x, targetY, bottle.transform.position.z);
     }
 }

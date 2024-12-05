@@ -13,7 +13,8 @@ public class LevelMenuManager : MonoBehaviour
 
     public void OnClickLevel(int levelNum)
     {
-        currentLevel = levelNum;
+        GameModeSelection.Instance.SetGameMode(EGameMode.Level);
+        currentLevel = levelNum - 1;
 
         // pass values to LevelManager via Singleton
         if (LevelManager.Instance != null )

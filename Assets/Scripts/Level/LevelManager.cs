@@ -56,8 +56,4 @@ public class LevelManager : MonoBehaviour
         return currentLevel;
     }
     
-    private void Start()
-    {
-        
-    }
 }
