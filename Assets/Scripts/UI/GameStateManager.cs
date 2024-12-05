@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class GameStateManager : MonoBehaviour
 {
@@ -36,19 +37,36 @@ public class GameStateManager : MonoBehaviour
         }
     }
 
-    public GameObject gameSuccessPanel;
-    public GameObject gameOverPanel;
+    private EGameState currentState;
+    public UnityEvent OnGameStateChanged;
 
-
-    public void ShowSuccessPanel()
+    public void ChangeState(EGameState newState)
     {
-        
-        gameSuccessPanel.SetActive(true);
-    }
+        currentState = newState;
 
-    public void ShowOverPanel()
-    { 
-        gameOverPanel.SetActive(true);
+        switch (newState)
+        {
+            case EGameState.Playing:
+                GameUIManager.Instance.HidePausePanel();
+                Time.timeScale = 1; // resume game
+                break;
+
+            case EGameState.Paused:
+                GameUIManager.Instance.ShowPausePanel();
+                Time.timeScale = 0;
+                break;
+
+            case EGameState.Success:
+                GameUIManager.Instance.ShowSuccessPanel();
+                Time.timeScale = 1;
+                break;
+
+            case EGameState.GameOver:
+                GameUIManager.Instance.ShowGameOverPanel();
+                Time.timeScale = 0;
+                break;
+
+        }
     }
 
 }

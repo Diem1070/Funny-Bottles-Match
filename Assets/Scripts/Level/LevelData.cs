@@ -11,6 +11,7 @@ public class LevelData : MonoBehaviour
     [SerializeField] float timeLimit;            // Timer limit (0 if no timer)
     [SerializeField] int checkLimit;              // number of checks allowed (0 if no limit)
     [SerializeField] Image[] star;
+    [SerializeField] ECheckMode checkMode = ECheckMode.ButtonCheck;     // default
 
 
 
@@ -19,6 +20,8 @@ public class LevelData : MonoBehaviour
 
     public float TimeLimit { get { return timeLimit; } set { timeLimit = value; } }
     public int CheckLimit { get {return checkLimit; } set { checkLimit = value; } }
+
+    public ECheckMode CheckMode { get { return checkMode; } set { checkMode = value; } }
     
     public Image[] Star { get { return star; } set { star = value; } }
 
