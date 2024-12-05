@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class GameUIManager : MonoBehaviour
 {
@@ -47,6 +48,9 @@ public class GameUIManager : MonoBehaviour
     [SerializeField] GameObject successPanel;
     [SerializeField] GameObject gameOverPanel;
     [SerializeField] GameObject GamePlayArea;
+    [SerializeField] GameObject GameStatePanel;
+
+    [SerializeField] TMP_Text stateText;
 
     // Set active for panel
     public void ShowPausePanel()
@@ -65,7 +69,9 @@ public class GameUIManager : MonoBehaviour
     // win
     public void ShowSuccessPanel()
     {
-        successPanel.SetActive(true);
+        //successPanel.SetActive(true);
+        UpdateStateText(true);
+        GameStatePanel.SetActive(true);
     }
 
     // lose
@@ -80,6 +86,7 @@ public class GameUIManager : MonoBehaviour
         pausePanel.SetActive(false );
         GamePlayArea.SetActive(false);
         successPanel.SetActive(false );
+        GameStatePanel.SetActive(false);
     }
 
     // return home
@@ -95,6 +102,22 @@ public class GameUIManager : MonoBehaviour
         Time.timeScale = 1; 
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 
+    }
+
+    private void UpdateStateText(bool isWin)
+    {
+        if (isWin && GameModeSelection.Instance.GetGameMode() == EGameMode.Level)
+        {
+            stateText.text = "Level Complete!";
+        }
+        else if (isWin)
+        {
+            stateText.text = "Success!";
+        }
+        else
+        {
+            stateText.text = "Game Over";
+        }
     }
 
 }
