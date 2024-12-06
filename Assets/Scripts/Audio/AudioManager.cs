@@ -43,8 +43,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip bgm;
     public AudioClip select;
     public AudioClip deselect;
-    public AudioClip ;
-       ;
+  
     [SerializeField] Slider bgmSlider;
     [SerializeField] Slider sfxSlider;
 }
