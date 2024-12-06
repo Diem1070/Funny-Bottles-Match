@@ -25,4 +25,8 @@ public class MainMenuManager : MonoBehaviour
         settingsPanel.gameObject.SetActive(true);
         mainMenu.gameObject.SetActive(true);
     }
+    public void QuickGame()
+    {
+        Application.Quit();
+    }
 }

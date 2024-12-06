@@ -100,6 +100,11 @@ public class GameUIManager : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         //StartCoroutine(ResetUIAfterSceneLoaded());
     }
+
+    public void QuickGame()
+    {
+        Application.Quit();
+    }
     private IEnumerator ResetUIAfterSceneLoaded()
     {
         yield return null; 
@@ -123,19 +128,14 @@ public class GameUIManager : MonoBehaviour
         StartCoroutine(WaitForShowingButtons());
     }
 
-    private bool isShowingButtons = false;
 
     private IEnumerator WaitForShowingButtons()
     {
-        //if (isShowingButtons) yield break;
-
-        //isShowingButtons = true;
         yield return new WaitForSeconds(2.5f);
 
         if (GamePlayArea != null) GamePlayArea.SetActive(false);
         if (Buttons != null) Buttons.SetActive(true);
 
-        //isShowingButtons = false;
     }
 
 
