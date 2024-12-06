@@ -98,7 +98,7 @@ public class BottleEvent
         bottle2.GetComponent<Bottle>().StartCoroutine(SmoothMove(bottle2, bottle1OriginalPosition, bottle2OriginalPosition));
 
         // Reset the height offset for both bottles after the move.
-        bottle1.GetComponent<Bottle>().StartCoroutine(ResetHeightAfterSwap(bottle1, bottle2, 0.5f)); // Adjust delay as needed
+        bottle1.GetComponent<Bottle>().StartCoroutine(ResetHeightAfterSwap(bottle1, bottle2, 0.75f)); // Adjust delay as needed
     }
 
     // Coroutine to reset bottle heights after the swap animation is complete

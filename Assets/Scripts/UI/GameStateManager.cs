@@ -63,7 +63,7 @@ public class GameStateManager : MonoBehaviour
 
             case EGameState.GameOver:
                 GameUIManager.Instance.ShowGameOverPanel();
-                Time.timeScale = 0;
+                Time.timeScale = 1;
                 break;
 
         }

@@ -101,6 +101,7 @@ public class GameManager : MonoBehaviour
 
     void InitializeGame()
     {
+        GameUIManager.Instance.Initialize();
         // Bottles
         numberOfBottles = gameModeManager.GetNumberOfBottles();
         bottleManager = new BottleManager(numberOfBottles, bottlePrefabs, distanceBetweenBottles, sampleBottlesPosition, playedBottlesPosition, parentTransform);

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using UnityEngine.UI;
 
 public class GameUIManager : MonoBehaviour
 {
@@ -14,12 +15,6 @@ public class GameUIManager : MonoBehaviour
             if (_instance == null)
             {
                 _instance = FindObjectOfType<GameUIManager>();
-                if (_instance == null)
-                {
-                    GameObject obj = new GameObject("GameUIManager");
-                    _instance = obj.AddComponent<GameUIManager>();
-                    DontDestroyOnLoad(obj);
-                }
             }
             return _instance;
         }
@@ -30,7 +25,6 @@ public class GameUIManager : MonoBehaviour
         if (_instance == null)
         {
             _instance = this;
-            //DontDestroyOnLoad(gameObject);      // use this when it's not a child
         }
         else if (_instance != this)
         {
@@ -49,6 +43,7 @@ public class GameUIManager : MonoBehaviour
     [SerializeField] GameObject gameOverPanel;
     [SerializeField] GameObject GamePlayArea;
     [SerializeField] GameObject GameStatePanel;
+    [SerializeField] GameObject Buttons;
 
     [SerializeField] TMP_Text stateText;
 
@@ -77,7 +72,9 @@ public class GameUIManager : MonoBehaviour
     // lose
     public void ShowGameOverPanel()
     {
-        gameOverPanel.SetActive(true);
+        //gameOverPanel.SetActive(true);
+        UpdateStateText(false);
+        GameStatePanel.SetActive(true);
     }
 
 
@@ -101,7 +98,12 @@ public class GameUIManager : MonoBehaviour
     {
         Time.timeScale = 1; 
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-
+        //StartCoroutine(ResetUIAfterSceneLoaded());
+    }
+    private IEnumerator ResetUIAfterSceneLoaded()
+    {
+        yield return null; 
+        Initialize(); 
     }
 
     private void UpdateStateText(bool isWin)
@@ -118,6 +120,23 @@ public class GameUIManager : MonoBehaviour
         {
             stateText.text = "Game Over";
         }
+        StartCoroutine(WaitForShowingButtons());
     }
+
+    private bool isShowingButtons = false;
+
+    private IEnumerator WaitForShowingButtons()
+    {
+        //if (isShowingButtons) yield break;
+
+        //isShowingButtons = true;
+        yield return new WaitForSeconds(2.5f);
+
+        if (GamePlayArea != null) GamePlayArea.SetActive(false);
+        if (Buttons != null) Buttons.SetActive(true);
+
+        //isShowingButtons = false;
+    }
+
 
 }
