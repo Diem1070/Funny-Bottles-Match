@@ -1,6 +1,6 @@
 # 🎮 **Funny Bottles Match**  
 
-Welcome to **Colorful Bottle Match** – a fun and vibrant puzzle game where matching colors has never been so satisfying! 🌈✨  
+Welcome to **Colorful Bottle Match** – a fun and vibrant game where matching colors has never been so satisfying! 🌈✨  
 
 ---
 
