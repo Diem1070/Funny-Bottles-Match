@@ -2,18 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class LevelMenuManager : MonoBehaviour
 {
     public LevelData[] levels;
 
     public static int currentLevel;
-    private GameManager gameManager;
 
     public void OnClickLevel(int levelNum)
     {
-        currentLevel = levelNum;
+        GameModeSelection.Instance.SetGameMode(EGameMode.Level);
+        currentLevel = levelNum - 1;
 
         // pass values to LevelManager via Singleton
         if (LevelManager.Instance != null )
@@ -26,7 +25,7 @@ public class LevelMenuManager : MonoBehaviour
         {
             Debug.LogError("LevelManager instance is null");
         }
-        SceneManager.LoadScene("GamePlay");
+        UnityEngine.SceneManagement.SceneManager.LoadScene("GamePlay");
         Debug.Log("Navigate to GamePlay successully");
 
     }

@@ -17,6 +17,8 @@ public class BottleManager
     private HashSet<string> createdBottleNames;     // theo doi cac chai da duoc tao
     float parentZ;
 
+    public int NumberOfBottles { get; private set; }
+
     // constructor
     public BottleManager(int numberOfBottles, GameObject[] bottlePrefabs, float distance, float samplePos, float playedPos, Transform parentTransform)
     {
@@ -61,6 +63,8 @@ public class BottleManager
                 i++;
             }
         }
+
+        ShufflePlayedBottles();
     }
 
     private GameObject CreateBottle(GameObject prefab, Vector3 position, int _bottles)
@@ -76,7 +80,7 @@ public class BottleManager
     }
 
     // xao tron vi tri cac chai
-    public void ShufflePlayedBottles()
+    private void ShufflePlayedBottles()
     {
         // loop tung chai 
         for (int i = 0; i < numberOfBottles; i++)

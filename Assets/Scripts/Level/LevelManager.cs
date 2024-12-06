@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -56,8 +55,4 @@ public class LevelManager : MonoBehaviour
         return currentLevel;
     }
     
-    private void Start()
-    {
-        
-    }
 }

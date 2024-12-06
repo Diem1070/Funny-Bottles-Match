@@ -12,40 +12,19 @@ public class Bottle : MonoBehaviour
     public string description;
 
     private Renderer bottleRender;
-    public Light2D glowLight;
     
     void Start()
     {
         InitializeBottle();
-        //glowLight = GetComponentInChildren<Light2D>();
         bottleRender = GetComponent<Renderer>();
-        if (glowLight != null) TurnOffLight();
-        else Debug.LogError("Light is null");
 
         if (bottleRender == null) Debug.LogError("bottle renderer is null");
     }
 
     void InitializeBottle()
     {
-        Debug.Log("Name: " +  name);
+        Debug.Log("Name: " + name);
 
-        
-    }
-
-    public void TurnOnLight()
-    {
-        if (glowLight != null )
-        {
-            glowLight.enabled = true;       
-        }
-    }
-    
-    public void TurnOffLight()
-    {
-        if (glowLight != null)
-        {
-            glowLight.enabled = false;
-        }
     }
 
     public void SetColor(Color color)

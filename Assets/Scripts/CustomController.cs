@@ -20,6 +20,7 @@ public class CustomController : MonoBehaviour
     }
     public void OnPlayButtonPressed()
     {
+        GameModeSelection.Instance.SetGameMode(EGameMode.Custom);
         Debug.Log(numberSelector.GetCurrentNumber());
         // truyen number of bottles vao GameSettings
         GameSettings.Instance.SetNumberOfBottles(numberSelector.GetCurrentNumber());
