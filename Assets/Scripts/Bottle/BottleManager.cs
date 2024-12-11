@@ -7,15 +7,20 @@ public class BottleManager
     public GameObject[] sampleBottles { get; private set; }
     public GameObject[] playedBottles { get; private set; }
 
+    public Transform parentTransform;
+
     private int numberOfBottles;
     private GameObject[] bottlePrefabs;
     private float distanceBetweenBottles;
     private float sampleBottlesPosition;    // vi tri cua hang chai mau
     private float playedBottlesPosition;    // vi tri cua hang chai duoc choi
     private HashSet<string> createdBottleNames;     // theo doi cac chai da duoc tao
+    float parentZ;
+
+    public int NumberOfBottles { get; private set; }
 
     // constructor
-    public BottleManager(int numberOfBottles, GameObject[] bottlePrefabs, float distance, float samplePos, float playedPos)
+    public BottleManager(int numberOfBottles, GameObject[] bottlePrefabs, float distance, float samplePos, float playedPos, Transform parentTransform)
     {
         this.numberOfBottles = numberOfBottles;
         this.bottlePrefabs = bottlePrefabs;
@@ -23,6 +28,8 @@ public class BottleManager
         this.sampleBottlesPosition = samplePos;
         this.playedBottlesPosition = playedPos;
         createdBottleNames = new HashSet<string>();
+        this.parentTransform = parentTransform;
+        this.parentZ = parentTransform.position.z;
     }
 
     public void InitializeBottles()
@@ -33,6 +40,7 @@ public class BottleManager
 
         // tinh toan vi tri cua chai dau tien
         float startingX = -((numberOfBottles - 1) * distanceBetweenBottles) / 2;
+        float parentZ = parentTransform.position.z;
 
         // loop tao bottles
         for (int i = 0; i < numberOfBottles; )
@@ -44,27 +52,35 @@ public class BottleManager
             if (!createdBottleNames.Contains(bottle.name))
             {
                 // tinh toan vi tri cho chai do
-                Vector3 samplePos = new Vector3(startingX + i * distanceBetweenBottles, sampleBottlesPosition, 0f);
-                Vector3 playedPos = new Vector3(startingX + i * distanceBetweenBottles, playedBottlesPosition, 0f);
+                Vector3 samplePos = new Vector3(startingX + i * distanceBetweenBottles, sampleBottlesPosition, parentTransform.position.z);
+                Vector3 playedPos = new Vector3(startingX + i * distanceBetweenBottles, playedBottlesPosition, parentTransform.position.z);
 
-                sampleBottles[i] = CreateBottle(bottle, samplePos);
-                playedBottles[i] = CreateBottle(bottle, playedPos);
+                playedBottles[i] = CreateBottle(bottle, playedPos, 0);
+                sampleBottles[i] = CreateBottle(bottle, samplePos, 1);
+                
 
                 createdBottleNames.Add(bottle.name);
                 i++;
             }
         }
+
+        ShufflePlayedBottles();
     }
 
-    private GameObject CreateBottle(GameObject prefab, Vector3 position)
+    private GameObject CreateBottle(GameObject prefab, Vector3 position, int _bottles)
     {
-        GameObject bottle = GameObject.Instantiate(prefab, position, Quaternion.identity);
+        GameObject bottle = GameObject.Instantiate(prefab, position, Quaternion.identity, parentTransform);
+
+        if (_bottles == 1) SetBottleColor(bottle, Color.black);
+        if (_bottles == 0) SetBottleColor(bottle, Color.white);
+
         bottle.name = prefab.name;
+        bottle.transform.localScale = new Vector3(108, 108, 1);
         return bottle;
     }
 
     // xao tron vi tri cac chai
-    public void ShufflePlayedBottles()
+    private void ShufflePlayedBottles()
     {
         // loop tung chai 
         for (int i = 0; i < numberOfBottles; i++)
@@ -78,7 +94,7 @@ public class BottleManager
             playedBottles[randomIndex] = temp;
 
             // move bottle to new position
-            Vector3 newPosition = new Vector3(-((numberOfBottles - 1) * distanceBetweenBottles) / 2 + i * distanceBetweenBottles, playedBottlesPosition, 0f);
+            Vector3 newPosition = new Vector3(-((numberOfBottles - 1) * distanceBetweenBottles) / 2 + i * distanceBetweenBottles, playedBottlesPosition, parentZ);
             playedBottles[i].transform.position = newPosition;
         }
     }
@@ -94,5 +110,10 @@ public class BottleManager
         }
         return matchedCount;
     }
-    
+
+    public void SetBottleColor(GameObject bottle, Color color)
+    {
+        Renderer bottleRenderer = bottle.GetComponent<Renderer>();
+        bottleRenderer.material.color = color;
+    }
 }
