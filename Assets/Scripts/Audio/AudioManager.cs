@@ -1,49 +1,45 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 public class AudioManager : MonoBehaviour
 {
-    private static AudioManager _instance;
+    [Header("-----Audio Source-----")]
+    [SerializeField] AudioSource bgmSource;
+    [SerializeField] AudioSource sfxSource;
 
-    public static AudioManager Instance
-    {
-        get
-        {
-            if (_instance == null)
-            {
-                _instance = FindObjectOfType<AudioManager>();
-                if (_instance == null)
-                {
-                    GameObject obj = new GameObject("AudioManager");
-                    _instance = obj.AddComponent<AudioManager>();
-                }
-            }
-            return _instance;
-        }
-    }
+    [Header("-----Audio Clip-----")]
+    public AudioClip bgm;
+    public AudioClip selectbottle;
+    public AudioClip deselectbottle;
+    public AudioClip swapbottles;
+    public AudioClip buttonclick;
+    public AudioClip win;
+    public AudioClip lose;
+
+    public static AudioManager _Instance;
 
     private void Awake()
     {
-        if (_instance == null)
+        // Keep bgm playing when change scene
+        if (_Instance == null)
         {
-            _instance = this;
+            _Instance = this;
             DontDestroyOnLoad(gameObject);
         }
-        else if (_instance != this)
+        else
         {
             Destroy(gameObject);
         }
     }
 
+    private void Start()
+    {
+        bgmSource.clip = bgm;
+        bgmSource.loop = true; //Enable bgm looping
+        bgmSource.Play();
+    }
 
-
-    [SerializeField] AudioSource bgmSource;
-    [SerializeField] AudioSource sfxSource;
-
-    public AudioClip bgm;
-    public AudioClip select;
-    public AudioClip deselect;
-  
-    [SerializeField] Slider bgmSlider;
-    [SerializeField] Slider sfxSlider;
+    public void PlaySFX(AudioClip clip)
+    {
+        sfxSource.PlayOneShot(clip);
+    }
 }

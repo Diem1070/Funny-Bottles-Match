@@ -76,6 +76,7 @@ public class BottleEvent
     {
         Debug.Log(bottle.name + " selected");
         bottle.transform.position = new Vector3(bottle.transform.position.x, bottle.transform.position.y + selectedBottleHeightOffset, bottle.transform.position.z);
+
     }
     
     // huy chon bottle
