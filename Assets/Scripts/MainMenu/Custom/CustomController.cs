@@ -27,6 +27,7 @@ public class CustomController : MonoBehaviour
 
         // navigate to GamePlay
         SceneManager.LoadScene("GamePlay");
+        AudioManager._Instance.PlaySFX(AudioManager._Instance.buttonclick); //Play sfx
     }
     
 }
