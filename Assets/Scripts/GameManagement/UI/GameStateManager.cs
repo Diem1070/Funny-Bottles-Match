@@ -49,9 +49,11 @@ public class GameStateManager : MonoBehaviour
             case EGameState.Playing:
                 GameUIManager.Instance.HidePausePanel();
                 Time.timeScale = 1; // resume game
+                AudioManager._Instance.PlaySFX(AudioManager._Instance.buttonclick); //Play sfx
                 break;
 
             case EGameState.Paused:
+                AudioManager._Instance.PlaySFX(AudioManager._Instance.buttonclick); //Play sfx
                 GameUIManager.Instance.ShowPausePanel();
                 Time.timeScale = 0;
                 break;

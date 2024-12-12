@@ -27,13 +27,14 @@ public class LevelMenuManager : MonoBehaviour
         }
         UnityEngine.SceneManagement.SceneManager.LoadScene("GamePlay");
         Debug.Log("Navigate to GamePlay successully");
-
+        AudioManager._Instance.PlaySFX(AudioManager._Instance.buttonclick); //Play sfx
     }
 
 
     public void OnClickBack()
     {
         this.gameObject.SetActive(false);
+        AudioManager._Instance.PlaySFX(AudioManager._Instance.buttonclick); //Play sfx
     }
     
 }

@@ -84,6 +84,7 @@ public class GameUIManager : MonoBehaviour
         GamePlayArea.SetActive(false);
         successPanel.SetActive(false );
         GameStatePanel.SetActive(false);
+        AudioManager._Instance.PlaySFX(AudioManager._Instance.buttonclick); //Play sfx
     }
 
     // return home
@@ -91,6 +92,7 @@ public class GameUIManager : MonoBehaviour
     {
         Time.timeScale = 1;
         SceneManager.LoadScene("MainMenu");
+        AudioManager._Instance.PlaySFX(AudioManager._Instance.buttonclick); //Play sfx
     }
 
     // restart game
@@ -98,6 +100,7 @@ public class GameUIManager : MonoBehaviour
     {
         Time.timeScale = 1; 
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        AudioManager._Instance.PlaySFX(AudioManager._Instance.buttonclick); //Play sfx
         //StartCoroutine(ResetUIAfterSceneLoaded());
     }
 

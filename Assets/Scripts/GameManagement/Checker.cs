@@ -48,6 +48,7 @@ public class Checker : MonoBehaviour
             // call event when click check
             OnCheck?.Invoke();
         }
+        AudioManager._Instance.PlaySFX(AudioManager._Instance.buttonclick); //Play sfx
     }
 
     public void AutoCheck()
