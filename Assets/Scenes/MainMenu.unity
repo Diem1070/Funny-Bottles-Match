@@ -2508,13 +2508,25 @@ MonoBehaviour:
   m_FillRect: {fileID: 1477460483}
   m_HandleRect: {fileID: 1352234026}
   m_Direction: 0
-  m_MinValue: 0
-  m_MaxValue: 1
+  m_MinValue: -50
+  m_MaxValue: -5
   m_WholeNumbers: 0
-  m_Value: 0.5
+  m_Value: -5
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1339662091}
+        m_TargetAssemblyTypeName: VolumnSettings, Assembly-CSharp
+        m_MethodName: SetBGMVolumn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &623862188
 GameObject:
   m_ObjectHideFlags: 0
@@ -5110,6 +5122,7 @@ GameObject:
   - component: {fileID: 1339662089}
   - component: {fileID: 1339662088}
   - component: {fileID: 1339662087}
+  - component: {fileID: 1339662091}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -5205,6 +5218,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1339662091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1339662086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a792585ed0b62de47a9df35d7894668a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GameAudioMixer: {fileID: 24100000, guid: 657d88f8e1354e1438cdda2c6960d55c, type: 2}
+  BGMSlider: {fileID: 601319005}
+  SFXSlider: {fileID: 1872091114}
 --- !u!1 &1341131144
 GameObject:
   m_ObjectHideFlags: 0
@@ -5649,7 +5677,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1513280434}
-  - component: {fileID: 1513280435}
   m_Layer: 5
   m_Name: Audio
   m_TagString: Untagged
@@ -5678,21 +5705,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 900, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1513280435
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1513280433}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a792585ed0b62de47a9df35d7894668a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Mixer: {fileID: 0}
-  BGMSlider: {fileID: 601319005}
-  SFXSlider: {fileID: 1872091114}
 --- !u!1 &1523571527
 GameObject:
   m_ObjectHideFlags: 0
@@ -7633,13 +7645,25 @@ MonoBehaviour:
   m_FillRect: {fileID: 941019841}
   m_HandleRect: {fileID: 1260961896}
   m_Direction: 0
-  m_MinValue: 0
-  m_MaxValue: 1
+  m_MinValue: -50
+  m_MaxValue: -5
   m_WholeNumbers: 0
-  m_Value: 0.5
+  m_Value: -5
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1339662091}
+        m_TargetAssemblyTypeName: VolumnSettings, Assembly-CSharp
+        m_MethodName: SetSFXVolumn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1884832178
 GameObject:
   m_ObjectHideFlags: 0
