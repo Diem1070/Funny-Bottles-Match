@@ -140,12 +140,14 @@ public class GameManager : MonoBehaviour
         Debug.Log("Success!");
         timer.StopTimer();  
         EndGame(true);          // isWin = true
+        AudioManager._Instance.PlaySFX(AudioManager._Instance.win); //Play win sfx
     }
 
     void GameOver()
     {
         Debug.Log("Game Over!");
         EndGame(false);         // isWin = false
+        AudioManager._Instance.PlaySFX(AudioManager._Instance.lose); //Play lose sfx
     }
 
     // Method to finish game

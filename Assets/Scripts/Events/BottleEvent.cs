@@ -75,6 +75,7 @@ public class BottleEvent
     public void SelectBottle(GameObject bottle)
     {
         Debug.Log(bottle.name + " selected");
+<<<<<<< Updated upstream
 
         // light
         Bottle bottleScript = bottle.GetComponent<Bottle>();
@@ -82,12 +83,17 @@ public class BottleEvent
         {
             bottleScript.TurnOnLight();
         }
+=======
+        bottle.transform.position = new Vector3(bottle.transform.position.x, bottle.transform.position.y + selectedBottleHeightOffset, bottle.transform.position.z);
+        AudioManager._Instance.PlaySFX(AudioManager._Instance.selectbottle); //Play select sfx
+>>>>>>> Stashed changes
     }
     
     // huy chon bottle
     public void DeselectBottle(GameObject bottle)
     {
         Debug.Log(bottle.name + " deselected");
+<<<<<<< Updated upstream
 
         // light
         Bottle bottleScript = bottle.GetComponent<Bottle>();
@@ -95,6 +101,10 @@ public class BottleEvent
         {
             bottleScript.TurnOffLight();
         }
+=======
+        bottle.transform.position = new Vector3(bottle.transform.position.x, bottle.transform.position.y - selectedBottleHeightOffset, bottle.transform.position.z);
+        AudioManager._Instance.PlaySFX(AudioManager._Instance.deselectbottle); //Play deselect sfx
+>>>>>>> Stashed changes
     }
     
     // doi vi tri 
