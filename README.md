@@ -39,4 +39,4 @@ Whether you’re here to challenge your brain or just have fun, this game has so
 ---
 
 ## **📦 Installation**  
-Coming soon...
+[Download Funny Bottles Match] (https://github.com/Diem1070/Funny-Bottles-Match/releases/download/v1.0/Funny.Bottles.Match.exe)
