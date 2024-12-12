@@ -1,5 +1,9 @@
 fileFormatVersion: 2
-guid: 52505b45d1a826b4eb3633c48de56185
+<<<<<<<< Updated upstream:Assets/Scripts/PauseController.cs.meta
+guid: 54bc40103bc17c842b8916435e8fa7f8
+========
+guid: 5d3cee28af8925843a06bfeb0f51cb29
+>>>>>>>> Stashed changes:Assets/AudioManager.cs.meta
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
