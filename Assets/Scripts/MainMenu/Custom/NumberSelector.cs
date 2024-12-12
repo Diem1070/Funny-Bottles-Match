@@ -25,6 +25,7 @@ public class NumberSelector : MonoBehaviour
         {
             currentValue++;
             UpdateNumberDisplay();
+            AudioManager._Instance.PlaySFX(AudioManager._Instance.buttonclick); //Play sfx
         }
     }
 
@@ -34,6 +35,7 @@ public class NumberSelector : MonoBehaviour
         {
             currentValue--;
             UpdateNumberDisplay();
+            AudioManager._Instance.PlaySFX(AudioManager._Instance.buttonclick); //Play sfx
         }
     }
 
