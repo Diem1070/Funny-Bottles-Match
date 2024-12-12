@@ -76,15 +76,15 @@ public class BottleEvent
     {
         Debug.Log(bottle.name + " selected");
         bottle.transform.position = new Vector3(bottle.transform.position.x, bottle.transform.position.y + selectedBottleHeightOffset, bottle.transform.position.z);
-
+        AudioManager._Instance.PlaySFX(AudioManager._Instance.selectbottle); //Play select sfx
     }
-    
+
     // huy chon bottle
     public void DeselectBottle(GameObject bottle)
     {
         Debug.Log(bottle.name + " deselected");
         bottle.transform.position = new Vector3(bottle.transform.position.x, bottle.transform.position.y - selectedBottleHeightOffset, bottle.transform.position.z);
-
+        AudioManager._Instance.PlaySFX(AudioManager._Instance.deselectbottle); //Play deselect sfx
     }
 
     // doi vi tri 
